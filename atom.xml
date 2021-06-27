@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://yuchuanghui.github.io</id>
+    <id>https://yisiyuhui.top</id>
     <title>Bolg of ysyh</title>
-    <updated>2021-06-27T12:54:48.116Z</updated>
+    <updated>2021-06-27T16:04:24.684Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://yuchuanghui.github.io"/>
-    <link rel="self" href="https://yuchuanghui.github.io/atom.xml"/>
+    <link rel="alternate" href="https://yisiyuhui.top"/>
+    <link rel="self" href="https://yisiyuhui.top/atom.xml"/>
     <subtitle>毎日頑張れ！</subtitle>
-    <logo>https://yuchuanghui.github.io/images/avatar.png</logo>
-    <icon>https://yuchuanghui.github.io/favicon.ico</icon>
+    <logo>https://yisiyuhui.top/images/avatar.png</logo>
+    <icon>https://yisiyuhui.top/favicon.ico</icon>
     <rights>All rights reserved 2021, Bolg of ysyh</rights>
     <entry>
         <title type="html"><![CDATA[Openssh使用小记]]></title>
-        <id>https://yuchuanghui.github.io/post/openssh-shi-yong-xiao-ji/</id>
-        <link href="https://yuchuanghui.github.io/post/openssh-shi-yong-xiao-ji/">
+        <id>https://yisiyuhui.top/post/openssh-shi-yong-xiao-ji/</id>
+        <link href="https://yisiyuhui.top/post/openssh-shi-yong-xiao-ji/">
         </link>
         <updated>2021-06-27T07:45:52.000Z</updated>
         <content type="html"><![CDATA[<p>主要是可以在终端就可以直接连接主机进行操作，同时还有一个比较好用的scp传递文件，今天发现在windows上也可以使用，在应用功能-&gt;可选功能中可以选择安装openssh-cilent和server，默认是安装好的。</p>
@@ -53,8 +53,8 @@ AuthorizedKeysFile .ssh/authorized_keys（注意和上面路径一致，一般�
     </entry>
     <entry>
         <title type="html"><![CDATA[Chapter2]]></title>
-        <id>https://yuchuanghui.github.io/post/chapter2/</id>
-        <link href="https://yuchuanghui.github.io/post/chapter2/">
+        <id>https://yisiyuhui.top/post/chapter2/</id>
+        <link href="https://yisiyuhui.top/post/chapter2/">
         </link>
         <updated>2021-02-19T01:07:58.000Z</updated>
         <content type="html"><![CDATA[<!-- more -->
