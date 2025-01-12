@@ -1,0 +1,843 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>shadowsocks一键搭建 | 一丝余辉</title>
+
+<link rel="shortcut icon" href="https://yuchuanghui.github.io/favicon.ico?v=1736689358889">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yuchuanghui.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <style>
+    /* 导航栏样式 */
+    .navbar {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+        display: inline-block;
+        padding-top: 0.3125rem;
+        padding-bottom: 0.3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+    }
+
+    .navbar-brand:hover,
+    .navbar-brand:focus {
+        text-decoration: none;
+    }
+
+    .navbar-nav {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .navbar-collapse {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .navbar-toggler {
+        padding: 0.25rem 0.75rem;
+        font-size: 1.25rem;
+        line-height: 1;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .navbar-toggler:hover,
+    .navbar-toggler:focus {
+        text-decoration: none;
+    }
+
+    @media (min-width: 992px) {
+        .navbar-expand-lg {
+            -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+        }
+
+        .navbar-expand-lg .navbar-nav {
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .navbar-expand-lg .navbar-collapse {
+            display: -ms-flexbox !important;
+            display: flex !important;
+            -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+        }
+
+        .navbar-expand-lg .navbar-toggler {
+            display: none;
+        }
+    }
+
+    @media (max-width: 991px) {
+        #navbarSupportedContent {
+            display: none;
+        }
+    }
+</style>
+<nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            一丝余辉
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/posts" class="menu gt-a-link">
+                    文章
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1736689358889"
+                action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function () {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    shadowsocks一键搭建
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-07-23 ·
+                    </time>
+                    
+                        <a href="https://yuchuanghui.github.io/tag/1VYtrWUJh/" class="post-tags">
+                            # VPS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <!-- more -->
+<h1 id="centos下一键安装shadowsocks服务">Centos下一键安装shadowsocks服务</h1>
+<blockquote>
+<p>参考：<a href="https://flyzyblog.net/install-ss-ssr-bbr-in-one-command/">一键脚本搭建SS/搭建SSR服务并开启BBR加速</a></p>
+</blockquote>
+ <!-- more -->
+<ol>
+<li>安装git服务</li>
+</ol>
+<pre><code class="language-bash">yum -y install git
+</code></pre>
+<ol start="2">
+<li>获取一键安装脚本</li>
+</ol>
+<pre><code class="language-bash">git clone -b master https://github.com/flyzy2005/ss-fly
+</code></pre>
+<ol start="3">
+<li>运行代码</li>
+</ol>
+<pre><code class="language-bash">ss-fly/ss-fly.sh -i psw 1024
+</code></pre>
+<ol start="4">
+<li>相关操作</li>
+</ol>
+<pre><code class="language-bash">修改配置文件：vim /etc/shadowsocks.json
+停止ss服务：ssserver -c /etc/shadowsocks.json -d stop
+启动ss服务：ssserver -c /etc/shadowsocks.json -d start
+重启ss服务：ssserver -c /etc/shadowsocks.json -d restart
+</code></pre>
+<ol start="5">
+<li>卸载</li>
+</ol>
+<pre><code class="language-bash">ss-fly/ss-fly.sh -uninstall
+</code></pre>
+<ol start="6">
+<li>开启bbr</li>
+</ol>
+<pre><code class="language-bash">ss-fly/ss-fly.sh -bbr
+sysctl net.ipv4.tcp_available_congestion_control # bbr开启检测
+</code></pre>
+<p># TODO: SSR搭建<br>
+# TODO: 具体代码的分析</p>
+<p>执行脚本的源码：</p>
+<pre><code class="language-sh">#! /bin/bash
+# Copyright (c) 2018 flyzy小站
+
+red='\033[0;31m'
+green='\033[0;32m'
+yellow='\033[0;33m'
+plain='\033[0m'
+
+os='ossystem'
+password='flyzy2005.com'
+port='1024'
+libsodium_file=&quot;libsodium-1.0.16&quot;
+libsodium_url=&quot;https://github.com/jedisct1/libsodium/releases/download/1.0.16/libsodium-1.0.16.tar.gz&quot;
+
+fly_dir=&quot;$( cd &quot;$( dirname &quot;${BASH_SOURCE[0]}&quot; )&quot; &amp;&amp; pwd )&quot;
+
+kernel_ubuntu_url=&quot;http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.2/linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb&quot;
+kernel_ubuntu_file=&quot;linux-image-4.10.2-041002-generic_4.10.2-041002.201703120131_amd64.deb&quot;
+
+usage () {
+        cat $fly_dir/sshelp
+}
+
+DIR=`pwd`
+
+wrong_para_prompt() {
+    echo -e &quot;[${red}错误${plain}] 参数输入错误!$1&quot;
+}
+
+install_ss() {
+        if [[ &quot;$#&quot; -lt 1 ]]
+        then
+          wrong_para_prompt &quot;请输入至少一个参数作为密码&quot;
+          return 1
+        fi
+        password=$1
+        if [[ &quot;$#&quot; -ge 2 ]]
+        then
+          port=$2
+        fi
+        if [[ $port -le 0 || $port -gt 65535 ]]
+        then
+          wrong_para_prompt &quot;端口号输入格式错误，请输入1到65535&quot;
+          exit 1
+        fi
+        check_os
+        check_dependency
+        download_files
+        ps -ef | grep -v grep | grep -i &quot;ssserver&quot; &gt; /dev/null 2&gt;&amp;1
+        if [ $? -eq 0 ]; then
+                ssserver -c /etc/shadowsocks.json -d stop
+        fi
+        generate_config $password $port
+        if [ ${os} == 'centos' ]
+        then
+                firewall_set
+        fi
+        install
+        cleanup
+}
+
+uninstall_ss() {
+        read -p &quot;确定要卸载ss吗？(y/n) :&quot; option
+        [ -z ${option} ] &amp;&amp; option=&quot;n&quot;
+        if [ &quot;${option}&quot; == &quot;y&quot; ] || [ &quot;${option}&quot; == &quot;Y&quot; ]
+        then
+                ps -ef | grep -v grep | grep -i &quot;ssserver&quot; &gt; /dev/null 2&gt;&amp;1
+                if [ $? -eq 0 ]; then
+                        ssserver -c /etc/shadowsocks.json -d stop
+                fi
+                case $os in
+                        'ubuntu'|'debian')
+                                update-rc.d -f ss-fly remove
+                                ;;
+                        'centos')
+                                chkconfig --del ss-fly
+                                ;;
+                esac
+                rm -f /etc/shadowsocks.json
+                rm -f /var/run/shadowsocks.pid
+                rm -f /var/log/shadowsocks.log
+                if [ -f /usr/local/shadowsocks_install.log ]; then
+                        cat /usr/local/shadowsocks_install.log | xargs rm -rf
+                fi
+                echo &quot;ss卸载成功！&quot;
+        else
+                echo
+                echo &quot;卸载取消&quot;
+        fi
+}
+
+install_bbr() {
+	[[ -d &quot;/proc/vz&quot; ]] &amp;&amp; echo -e &quot;[${red}错误${plain}] 你的系统是OpenVZ架构的，不支持开启BBR。&quot; &amp;&amp; exit 1
+	check_os
+	check_bbr_status
+	if [ $? -eq 0 ]
+	then
+		echo -e &quot;[${green}提示${plain}] TCP BBR加速已经开启成功。&quot;
+		exit 0
+	fi
+	check_kernel_version
+	if [ $? -eq 0 ]
+	then
+		echo -e &quot;[${green}提示${plain}] 你的系统版本高于4.9，直接开启BBR加速。&quot;
+		sysctl_config
+		echo -e &quot;[${green}提示${plain}] TCP BBR加速开启成功&quot;
+		exit 0
+	fi
+	    
+	if [[ x&quot;${os}&quot; == x&quot;centos&quot; ]]; then
+        	install_elrepo
+        	yum --enablerepo=elrepo-kernel -y install kernel-ml kernel-ml-devel
+        	if [ $? -ne 0 ]; then
+            		echo -e &quot;[${red}错误${plain}] 安装内核失败，请自行检查。&quot;
+            		exit 1
+        	fi
+    	elif [[ x&quot;${os}&quot; == x&quot;debian&quot; || x&quot;${os}&quot; == x&quot;ubuntu&quot; ]]; then
+        	[[ ! -e &quot;/usr/bin/wget&quot; ]] &amp;&amp; apt-get -y update &amp;&amp; apt-get -y install wget
+        	#get_latest_version
+        	#[ $? -ne 0 ] &amp;&amp; echo -e &quot;[${red}错误${plain}] 获取最新内核版本失败，请检查网络&quot; &amp;&amp; exit 1
+       		 #wget -c -t3 -T60 -O ${deb_kernel_name} ${deb_kernel_url}
+        	#if [ $? -ne 0 ]; then
+            	#	echo -e &quot;[${red}错误${plain}] 下载${deb_kernel_name}失败，请自行检查。&quot;
+            	#	exit 1
+       		#fi
+        	#dpkg -i ${deb_kernel_name}
+        	#rm -fv ${deb_kernel_name}
+		wget ${kernel_ubuntu_url}
+		if [ $? -ne 0 ]
+		then
+			echo -e &quot;[${red}错误${plain}] 下载内核失败，请自行检查。&quot;
+			exit 1
+		fi
+		dpkg -i ${kernel_ubuntu_file}
+    	else
+       	 	echo -e &quot;[${red}错误${plain}] 脚本不支持该操作系统，请修改系统为CentOS/Debian/Ubuntu。&quot;
+        	exit 1
+    	fi
+
+    	install_config
+    	sysctl_config
+    	reboot_os
+}
+
+install_ssr() {
+        check_os
+        case $os in
+                'ubuntu'|'debian')
+		     apt-get -y update
+                     apt-get -y install wget
+                     ;;
+                'centos')
+                     yum install -y wget
+                     ;;
+        esac
+	wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
+	chmod +x shadowsocksR.sh
+	./shadowsocksR.sh 2&gt;&amp;1 | tee shadowsocksR.log
+}
+
+check_os_() {
+        source /etc/os-release
+	local os_tmp=$(echo $ID | tr [A-Z] [a-z])
+        case $os_tmp in
+                ubuntu|debian)
+                os='ubuntu'
+                ;;
+                centos)
+                os='centos'
+                ;;
+                *)
+                echo -e &quot;[${red}错误${plain}] 本脚本暂时只支持Centos/Ubuntu/Debian系统，如需用本脚本，请先修改你的系统类型&quot;
+                exit 1
+                ;;
+        esac
+}
+
+check_os() {
+    if [[ -f /etc/redhat-release ]]; then
+        os=&quot;centos&quot;
+    elif cat /etc/issue | grep -Eqi &quot;debian&quot;; then
+        os=&quot;debian&quot;
+    elif cat /etc/issue | grep -Eqi &quot;ubuntu&quot;; then
+        os=&quot;ubuntu&quot;
+    elif cat /etc/issue | grep -Eqi &quot;centos|red hat|redhat&quot;; then
+        os=&quot;centos&quot;
+    elif cat /proc/version | grep -Eqi &quot;debian&quot;; then
+        os=&quot;debian&quot;
+    elif cat /proc/version | grep -Eqi &quot;ubuntu&quot;; then
+        os=&quot;ubuntu&quot;
+    elif cat /proc/version | grep -Eqi &quot;centos|red hat|redhat&quot;; then
+        os=&quot;centos&quot;
+    fi
+}
+
+check_bbr_status() {
+    local param=$(sysctl net.ipv4.tcp_available_congestion_control | awk '{print $3}')
+    if [[ x&quot;${param}&quot; == x&quot;bbr&quot; ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+version_ge(){
+    test &quot;$(echo &quot;$@&quot; | tr &quot; &quot; &quot;\n&quot; | sort -rV | head -n 1)&quot; == &quot;$1&quot;
+}
+
+check_kernel_version() {
+    local kernel_version=$(uname -r | cut -d- -f1)
+    if version_ge ${kernel_version} 4.9; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+sysctl_config() {
+    sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
+    sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
+    echo &quot;net.core.default_qdisc = fq&quot; &gt;&gt; /etc/sysctl.conf
+    echo &quot;net.ipv4.tcp_congestion_control = bbr&quot; &gt;&gt; /etc/sysctl.conf
+    sysctl -p &gt;/dev/null 2&gt;&amp;1
+}
+
+install_elrepo() {
+    if centosversion 5; then
+        echo -e &quot;[${red}错误${plain}] 脚本不支持CentOS 5。&quot;
+        exit 1
+    fi
+
+    rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+    if centosversion 6; then
+        rpm -Uvh http://www.elrepo.org/elrepo-release-6-8.el6.elrepo.noarch.rpm
+    elif centosversion 7; then
+        rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+    fi
+
+    if [ ! -f /etc/yum.repos.d/elrepo.repo ]; then
+        echo -e &quot;[${red}错误${plain}] 安装elrepo失败，请自行检查。&quot;
+        exit 1
+    fi
+}
+
+get_latest_version() {
+
+    latest_version=$(wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/ | awk -F'\&quot;v' '/v[4-9]./{print $2}' | cut -d/ -f1 | grep -v -  | sort -V | tail -1)
+
+    [ -z ${latest_version} ] &amp;&amp; return 1
+
+    if [[ `getconf WORD_BIT` == &quot;32&quot; &amp;&amp; `getconf LONG_BIT` == &quot;64&quot; ]]; then
+        deb_name=$(wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${latest_version}/ | grep &quot;linux-image&quot; | grep &quot;generic&quot; | awk -F'\&quot;&gt;' '/amd64.deb/{print $2}' | cut -d'&lt;' -f1 | head -1)
+        deb_kernel_url=&quot;http://kernel.ubuntu.com/~kernel-ppa/mainline/v${latest_version}/${deb_name}&quot;
+        deb_kernel_name=&quot;linux-image-${latest_version}-amd64.deb&quot;
+    else
+        deb_name=$(wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${latest_version}/ | grep &quot;linux-image&quot; | grep &quot;generic&quot; | awk -F'\&quot;&gt;' '/i386.deb/{print $2}' | cut -d'&lt;' -f1 | head -1)
+        deb_kernel_url=&quot;http://kernel.ubuntu.com/~kernel-ppa/mainline/v${latest_version}/${deb_name}&quot;
+        deb_kernel_name=&quot;linux-image-${latest_version}-i386.deb&quot;
+    fi
+
+    [ ! -z ${deb_name} ] &amp;&amp; return 0 || return 1
+}
+
+get_opsy() {
+    [ -f /etc/redhat-release ] &amp;&amp; awk '{print ($1,$3~/^[0-9]/?$3:$4)}' /etc/redhat-release &amp;&amp; return
+    [ -f /etc/os-release ] &amp;&amp; awk -F'[= &quot;]' '/PRETTY_NAME/{print $3,$4,$5}' /etc/os-release &amp;&amp; return
+    [ -f /etc/lsb-release ] &amp;&amp; awk -F'[=&quot;]+' '/DESCRIPTION/{print $2}' /etc/lsb-release &amp;&amp; return
+}
+
+opsy=$( get_opsy )
+arch=$( uname -m )
+lbit=$( getconf LONG_BIT )
+kern=$( uname -r )
+
+check_dependency() {
+        case $os in
+                'ubuntu'|'debian')
+                apt-get -y update
+                apt-get -y install python python-dev python-setuptools openssl libssl-dev curl wget unzip gcc automake autoconf make libtool
+                ;;
+                'centos')
+                yum install -y python python-devel python-setuptools openssl openssl-devel curl wget unzip gcc automake autoconf make libtool
+        esac
+}
+
+install_config() {
+    if [[ x&quot;${os}&quot; == x&quot;centos&quot; ]]; then
+        if centosversion 6; then
+            if [ ! -f &quot;/boot/grub/grub.conf&quot; ]; then
+                echo -e &quot;[${red}错误${plain}] 没有找到/boot/grub/grub.conf文件。&quot;
+                exit 1
+            fi
+            sed -i 's/^default=.*/default=0/g' /boot/grub/grub.conf
+        elif centosversion 7; then
+            if [ ! -f &quot;/boot/grub2/grub.cfg&quot; ]; then
+                echo -e &quot;[${red}错误${plain}] 没有找到/boot/grub2/grub.cfg文件。&quot;
+                exit 1
+            fi
+            grub2-set-default 0
+        fi
+    elif [[ x&quot;${os}&quot; == x&quot;debian&quot; || x&quot;${os}&quot; == x&quot;ubuntu&quot; ]]; then
+        /usr/sbin/update-grub
+    fi
+}
+
+reboot_os() {
+    echo
+    echo -e &quot;[${green}提示${plain}] 系统需要重启BBR才能生效。&quot;
+    read -p &quot;是否立马重启 [y/n]&quot; is_reboot
+    if [[ ${is_reboot} == &quot;y&quot; || ${is_reboot} == &quot;Y&quot; ]]; then
+        reboot
+    else
+        echo -e &quot;[${green}提示${plain}] 取消重启。其自行执行reboot命令。&quot;
+        exit 0
+    fi
+}
+
+download_files() {
+        if ! wget --no-check-certificate -O ${libsodium_file}.tar.gz ${libsodium_url}
+        then
+                echo -e &quot;[${red}错误${plain}] 下载${libsodium_file}.tar.gz失败!&quot;
+                exit 1
+        fi
+        if ! wget --no-check-certificate -O shadowsocks-master.zip https://github.com/shadowsocks/shadowsocks/archive/master.zip
+        then
+                echo -e &quot;[${red}错误${plain}] shadowsocks安装包文件下载失败！&quot;
+                exit 1
+        fi
+}
+
+generate_config() {
+    cat &gt; /etc/shadowsocks.json&lt;&lt;-EOF
+{
+    &quot;server&quot;:&quot;0.0.0.0&quot;,
+    &quot;server_port&quot;:$2,
+    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
+    &quot;local_port&quot;:1080,
+    &quot;password&quot;:&quot;$1&quot;,
+    &quot;timeout&quot;:300,
+    &quot;method&quot;:&quot;aes-256-cfb&quot;,
+    &quot;fast_open&quot;:false
+}
+EOF
+}
+
+firewall_set(){
+    echo -e &quot;[${green}信息${plain}] 正在设置防火墙...&quot;
+    if centosversion 6; then
+        /etc/init.d/iptables status &gt; /dev/null 2&gt;&amp;1
+        if [ $? -eq 0 ]; then
+            iptables -L -n | grep -i ${port} &gt; /dev/null 2&gt;&amp;1
+            if [ $? -ne 0 ]; then
+                iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport ${port} -j ACCEPT
+                iptables -I INPUT -m state --state NEW -m udp -p udp --dport ${port} -j ACCEPT
+                /etc/init.d/iptables save
+                /etc/init.d/iptables restart
+            else
+                echo -e &quot;[${green}信息${plain}] port ${port}已经开放。&quot;
+            fi
+        else
+            echo -e &quot;[${yellow}警告${plain}] 防火墙（iptables）好像已经停止或没有安装，如有需要请手动关闭防火墙。&quot;
+        fi
+    elif centosversion 7; then
+        systemctl status firewalld &gt; /dev/null 2&gt;&amp;1
+        if [ $? -eq 0 ]; then
+            firewall-cmd --permanent --zone=public --add-port=${port}/tcp
+            firewall-cmd --permanent --zone=public --add-port=${port}/udp
+            firewall-cmd --reload
+        else
+            echo -e &quot;[${yellow}警告${plain}] 防火墙（iptables）好像已经停止或没有安装，如有需要请手动关闭防火墙。&quot;
+        fi
+    fi
+    echo -e &quot;[${green}信息${plain}] 防火墙设置成功。&quot;
+}
+
+centosversion(){
+    if [ ${os} == 'centos' ]
+    then
+        local code=$1
+        local version=&quot;$(getversion)&quot;
+        local main_ver=${version%%.*}
+        if [ &quot;$main_ver&quot; == &quot;$code&quot; ]; then
+            return 0
+        else
+            return 1
+        fi
+    else
+        return 1
+    fi
+}
+
+getversion(){
+    if [[ -s /etc/redhat-release ]]; then
+        grep -oE  &quot;[0-9.]+&quot; /etc/redhat-release
+    else
+        grep -oE  &quot;[0-9.]+&quot; /etc/issue
+    fi
+}
+
+install() {
+        if [ ! -f /usr/lib/libsodium.a ]
+        then 
+                cd ${DIR}
+                tar zxf ${libsodium_file}.tar.gz
+                cd ${libsodium_file}
+                ./configure --prefix=/usr &amp;&amp; make &amp;&amp; make install
+                if [ $? -ne 0 ] 
+                then 
+                        echo -e &quot;[${red}错误${plain}] libsodium安装失败!&quot;
+                        cleanup
+                exit 1  
+                fi
+        fi      
+        ldconfig
+        
+        cd ${DIR}
+        unzip -q shadowsocks-master.zip
+        if [ $? -ne 0 ]
+        then 
+                echo -e &quot;[${red}错误${plain}] 解压缩失败，请检查unzip命令&quot;
+                cleanup
+                exit 1
+        fi      
+        cd ${DIR}/shadowsocks-master
+        python setup.py install --record /usr/local/shadowsocks_install.log
+        if [ -f /usr/bin/ssserver ] || [ -f /usr/local/bin/ssserver ]
+        then 
+                cp $fly_dir/ss-fly /etc/init.d/
+                chmod +x /etc/init.d/ss-fly
+                case $os in
+                        'ubuntu'|'debian')
+                                update-rc.d ss-fly defaults
+                                ;;
+                        'centos')
+                                chkconfig --add ss-fly
+                                chkconfig ss-fly on
+                                ;;
+                esac            
+                ssserver -c /etc/shadowsocks.json -d start
+        else    
+                echo -e &quot;[${red}错误${plain}] ss服务器安装失败，请联系flyzy小站（https://www.flyzy2005.com）&quot;
+                cleanup
+                exit 1
+        fi      
+        echo -e &quot;[${green}成功${plain}] 安装成功尽情冲浪！&quot;
+        echo -e &quot;你的服务器地址（IP）：\033[41;37m $(get_ip) \033[0m&quot;
+        echo -e &quot;你的密码            ：\033[41;37m ${password} \033[0m&quot;
+        echo -e &quot;你的端口            ：\033[41;37m ${port} \033[0m&quot;
+        echo -e &quot;你的加密方式        ：\033[41;37m aes-256-cfb \033[0m&quot;
+        echo -e &quot;欢迎访问flyzy小站   ：\033[41;37m https://www.flyzy2005.com \033[0m&quot;
+        get_ss_link
+}
+
+cleanup() {
+        cd ${DIR}
+        rm -rf shadowsocks-master.zip shadowsocks-master ${libsodium_file}.tar.gz ${libsodium_file}
+}
+
+get_ip(){
+    local IP=$( ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v &quot;^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\.&quot; | head -n 1 )
+    [ -z ${IP} ] &amp;&amp; IP=$( wget -qO- -t1 -T2 ipv4.icanhazip.com )
+    [ -z ${IP} ] &amp;&amp; IP=$( wget -qO- -t1 -T2 ipinfo.io/ip )
+    [ ! -z ${IP} ] &amp;&amp; echo ${IP} || echo
+}
+
+get_ss_link(){
+    if [ ! -f &quot;/etc/shadowsocks.json&quot; ]; then
+        echo 'shdowsocks配置文件不存在，请检查（/etc/shadowsocks.json）'
+        exit 1
+    fi
+    local tmp=$(echo -n &quot;`get_config_value method`:`get_config_value password`@`get_ip`:`get_config_value server_port`&quot; | base64 -w0)
+    echo -e &quot;你的ss链接：\033[41;37m ss://${tmp} \033[0m&quot;
+}
+
+get_config_value(){
+    cat /etc/shadowsocks.json | grep &quot;\&quot;$1\&quot;:&quot;|awk -F &quot;:&quot; '{print $2}'| sed 's/\&quot;//g;s/,//g;s/ //g'
+}
+
+if [ &quot;$#&quot; -eq 0 ]; then
+	usage
+	exit 0
+fi
+
+case $1 in
+	-h|h|help )
+		usage
+		exit 0;
+		;;
+	-v|v|version )
+		echo 'ss-fly Version 1.0, 2018-01-20, Copyright (c) 2018 flyzy2005'
+		exit 0;
+		;;
+esac
+
+if [ &quot;$EUID&quot; -ne 0 ]; then
+	echo -e &quot;[${red}错误${plain}] 必需以root身份运行，请使用sudo命令&quot;
+	exit 1;
+fi
+
+case $1 in
+	-i|i|install )
+        	install_ss $2 $3
+		;;
+        -bbr )
+        	install_bbr
+                ;;
+        -ssr )
+        	install_ssr
+                ;;
+	-uninstall )
+		uninstall_ss
+		;;
+        -sslink )
+                get_ss_link
+                ;;
+	* )
+		usage
+		;;
+esac
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://yuchuanghui.github.io/post/openvpn/" class="post-title gt-a-link">
+                    Centos7上安装OpenVPN
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">なんくるないさー</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://yuchuanghui.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

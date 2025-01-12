@@ -1,0 +1,368 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>WSL配置记录 | 一丝余辉</title>
+
+<link rel="shortcut icon" href="https://yuchuanghui.github.io/favicon.ico?v=1736689358889">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yuchuanghui.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <style>
+    /* 导航栏样式 */
+    .navbar {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+        display: inline-block;
+        padding-top: 0.3125rem;
+        padding-bottom: 0.3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+    }
+
+    .navbar-brand:hover,
+    .navbar-brand:focus {
+        text-decoration: none;
+    }
+
+    .navbar-nav {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .navbar-collapse {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .navbar-toggler {
+        padding: 0.25rem 0.75rem;
+        font-size: 1.25rem;
+        line-height: 1;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .navbar-toggler:hover,
+    .navbar-toggler:focus {
+        text-decoration: none;
+    }
+
+    @media (min-width: 992px) {
+        .navbar-expand-lg {
+            -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+        }
+
+        .navbar-expand-lg .navbar-nav {
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .navbar-expand-lg .navbar-collapse {
+            display: -ms-flexbox !important;
+            display: flex !important;
+            -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+        }
+
+        .navbar-expand-lg .navbar-toggler {
+            display: none;
+        }
+    }
+
+    @media (max-width: 991px) {
+        #navbarSupportedContent {
+            display: none;
+        }
+    }
+</style>
+<nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            一丝余辉
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/posts" class="menu gt-a-link">
+                    文章
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1736689358889"
+                action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function () {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    WSL配置记录
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2025-01-12 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <p>使用最新版本的WSL，相对更加简单易用</p>
+<!-- more -->
+<h2 id="wsl安装">wsl安装</h2>
+<p>bug 解决：The Windows Subsystem for Linux optional component is not enabled. Please enable it and try again.<br>
+<a href="https://blog.mokeedev.com/2023/01/1444/">在 Windows 11 上安装 Ubuntu 22.04 子系统时遇到的问题和解决方法 - 马丁龙猪的博客</a><br>
+使用手动安装可以指定盘的位置<br>
+<a href="https://learn.microsoft.com/en-us/windows/wsl/install-manual">Manual installation steps for older versions of WSL | Microsoft Learn</a><br>
+步骤包括：打开wsl服务、打开虚拟化平台(重启后生效)<br>
+下载包，解压第一次，再解压appx(x64)文件<br>
+安装wsl升级包(第一步必须完成并重启)<br>
+双击exe安装<br>
+wsl --update<br>
+wsl --update --prerelease</p>
+<h2 id="wsl共享代理">wsl共享代理</h2>
+<pre><code class="language-bash">[experimental] 
+autoMemoryReclaim=gradual 
+networkingMode=mirrored 
+dnsTunneling=true 
+firewall=true 
+autoProxy=true
+</code></pre>
+<p>更新到最新的wsl prerelease后修改<br>
+<a href="https://linux.do/t/topic/185815/3">Site Unreachable</a><br>
+wsl --manage Ubuntu --set-sparse true<br>
+启用稀疏 VHD 允许 WSL2 的硬盘空间自动回收<br>
+<a href="https://zhuanlan.zhihu.com/p/657110386">Site Unreachable</a></p>
+<h2 id="docker安装">docker安装</h2>
+<h4 id="本体安装">本体安装</h4>
+<p><a href="https://linux.do/t/topic/207951">彻底摆脱docker-desktop，让你在wsl中没有任何烦恼地使用docker - 开发调优 - LINUX DO</a></p>
+<pre><code class="language-bash"># 更新包索引 
+sudo apt update
+# 安装依赖包 
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common 
+# 添加 Docker 官方 GPG 密钥 
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg 
+# 添加 Docker 官方仓库 
+echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+# 更新包索引 
+sudo apt update 
+# 安装 Docker 
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+# 启动并启用 Docker 服务 
+sudo systemctl start docker 
+sudo systemctl enable docker 
+# 验证 Docker 是否安装成功 
+docker --version
+# 查看信息
+sudo docker info
+</code></pre>
+<p>安装完自带compose</p>
+<h4 id="配置wsl的system命令">配置WSL的system命令</h4>
+<pre><code class="language-bash">sudo nano /etc/wsl.conf
+</code></pre>
+<p>添加以下内容：</p>
+<pre><code>[boot] systemd=true
+</code></pre>
+<p>或者使用service</p>
+<h4 id="换源代理">换源？代理！</h4>
+<p>最新版的wsl支持mirror net，需要wsl --update 接着wsl --update --pre-release<br>
+换源无法解决拉取镜像问题<br>
+最佳办法，修改docker代理：<br>
+<a href="https://zhuanlan.zhihu.com/p/427589367">Site Unreachable</a><br>
+<a href="https://blog.csdn.net/omage/article/details/139560401">window wsl2的ubuntu如何配置代理获取docker image_wsl docker proxy-CSDN博客</a></p>
+<ol>
+<li>配置client代理可解决docker compose问题  <strong>没有用</strong><br>
+即,在WSL2中通过通用方式安装的docker.</li>
+</ol>
+<pre><code class="language-text">sudo vim /etc/default/docker
+
+输入:
+export HTTP_PROXY=&quot;http://127.0.0.1:1080&quot;
+export HTTPS_PROXY=&quot;http://127.0.0.1:1080&quot;
+export NO_PROXY=&quot;localhost,127.0.0.0/8,172.16.0.0/12,192.168.0.0/16,10.0.0.0/8&quot;
+</code></pre>
+<p>以下方法有用！</p>
+<pre><code class="language-bash">### 1、创建配置文件
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
+### 2、添加配置
+[Service]
+Environment=&quot;HTTP_PROXY=http://127.0.0.1:1080&quot;
+Environment=&quot;HTTPS_PROXY=http://127.0.0.1:1080&quot;
+Environment=&quot;NO_PROXY=localhost,127.0.0.1,docker-registry.example.com,.corp,&quot;
+### 3、重启容器
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre>
+<h2 id="1panel">1panel</h2>
+<p>远程运维工具<br>
+docker-compose file</p>
+<pre><code>
+</code></pre>
+<!-- more -->
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://yuchuanghui.github.io/post/jie-jue-pyinstaller-da-bao-wen-ti/" class="post-title gt-a-link">
+                    解决pyinstaller打包问题
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">なんくるないさー</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://yuchuanghui.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

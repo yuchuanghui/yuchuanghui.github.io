@@ -1,0 +1,391 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>nginx反向代理被ban服务器 | 一丝余辉</title>
+
+<link rel="shortcut icon" href="https://yuchuanghui.github.io/favicon.ico?v=1736689358889">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://yuchuanghui.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <style>
+    /* 导航栏样式 */
+    .navbar {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+        display: inline-block;
+        padding-top: 0.3125rem;
+        padding-bottom: 0.3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+    }
+
+    .navbar-brand:hover,
+    .navbar-brand:focus {
+        text-decoration: none;
+    }
+
+    .navbar-nav {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .navbar-collapse {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .navbar-toggler {
+        padding: 0.25rem 0.75rem;
+        font-size: 1.25rem;
+        line-height: 1;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .navbar-toggler:hover,
+    .navbar-toggler:focus {
+        text-decoration: none;
+    }
+
+    @media (min-width: 992px) {
+        .navbar-expand-lg {
+            -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+        }
+
+        .navbar-expand-lg .navbar-nav {
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .navbar-expand-lg .navbar-collapse {
+            display: -ms-flexbox !important;
+            display: flex !important;
+            -ms-flex-preferred-size: auto;
+            flex-basis: auto;
+        }
+
+        .navbar-expand-lg .navbar-toggler {
+            display: none;
+        }
+    }
+
+    @media (max-width: 991px) {
+        #navbarSupportedContent {
+            display: none;
+        }
+    }
+</style>
+<nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            一丝余辉
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="https://yuchuanghui.github.io/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/posts" class="menu gt-a-link">
+                    文章
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1736689358889"
+                action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = function () {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    nginx反向代理被ban服务器
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-27 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <p><img src="https://yuchuanghui.github.io/post-images/1669540529603.png" alt="" loading="lazy">nginx反向代理</p>
+<p>原理</p>
+<p>正向代理：代理客户端</p>
+<p>反向代理：代理服务端</p>
+<p>用途之一：一台服务器被墙，采用另一台未被墙的服务器作为代理</p>
+<p>域名A--&gt;服务器A--&gt;域名B--&gt;服务器A</p>
+<p>步骤：</p>
+<ol>
+<li>安装nginx</li>
+<li>nginx配置</li>
+</ol>
+<pre><code class="language-conf">\#设定负载均衡的服务器列表 
+
+\#weigth参数表示权值，权值越高被分配到的几率越大
+
+\# upstream cheems{
+
+\#     server https://yisiyuhui.top weight=1;
+
+\# }
+\# 采用upstream时--&gt;proxy_pass cheems，但此处只需要代理一台服务器，所以不需要这种写法
+   
+
+server {
+
+   \#侦听的443端口
+
+    listen 443 ssl; # managed by Certbot
+
+    server_name yisiyuhui.buzz;
+
+    ssl_certificate /etc/letsencrypt/live/yisiyuhui.buzz-0001/fullchain.pem; # managed by Certbot
+
+    ssl_certificate_key /etc/letsencrypt/live/yisiyuhui.buzz-0001/privkey.pem; # managed by Certbot
+
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+   
+
+    location / {
+
+        \# proxy_pass   209.141.40.130:433;    #在这里设置一个代理，和upstream的名字一样（有的话）
+
+        proxy_pass   https://yisiyuhui.top;    #可以是域名或者ip:port
+
+       \#以下是一些反向代理的配置可删除
+
+        \# proxy_redirect             on; 
+
+        \# #后端的Web服务器可以通过X-Forwarded-For获取用户真实IP
+
+        proxy_set_header           Host $host; 
+
+        proxy_set_header           X-Real-IP $remote_addr; 
+
+        proxy_set_header           X-Forwarded-For $proxy_add_x_forwarded_for; 
+
+        client_max_body_size       10m; #允许客户端请求的最大单文件字节数
+
+        client_body_buffer_size    128k; #缓冲区代理缓冲用户端请求的最大字节数
+
+        proxy_connect_timeout      300; #nginx跟后端服务器连接超时时间(代理连接超时)
+
+        proxy_send_timeout         300; #后端服务器数据回传时间(代理发送超时)
+
+        proxy_read_timeout         300; #连接成功后，后端服务器响应时间(代理接收超时)
+
+        proxy_buffer_size          4k; #设置代理服务器（nginx）保存用户头信息的缓冲区大小
+
+        proxy_buffers              4 32k; #proxy_buffers缓冲区，网页平均在32k以下的话，这样设置
+
+        proxy_busy_buffers_size    64k; #高负荷下缓冲大小（proxy_buffers*2）
+
+        proxy_temp_file_write_size 64k; #设定缓存文件夹大小，大于这个值，将从upstream服务器传
+
+    }
+
+}
+
+   
+server {
+
+    if ($host = yisiyuhui.buzz) {
+
+        return 301 https://$host$request_uri;
+
+    } # managed by Certbot
+
+
+    server_name yisiyuhui.buzz;
+
+    listen 80;
+
+    return 404; # managed by Certbot
+
+}
+</code></pre>
+<p>注意：</p>
+<ol>
+<li>
+<p>B服务器存在表单操作时，需要注意跨域问题，即A、B均需要为https</p>
+</li>
+<li>
+<p>nginx有时候会出现modules-available  modules-enabled的文件夹，出现配置覆盖，然后conf.d中配置无法生效的问题，一般会出现在80端口。</p>
+</li>
+<li>
+<p>nginx 常用命令</p>
+<pre><code class="language-bash">nginx -s reload
+nginx -s run
+systemctl status nginx
+netstat | grep nginx
+</code></pre>
+</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://yuchuanghui.github.io/post/try-xi-lie-yu-fa/" class="post-title gt-a-link">
+                    try系列语法
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">なんくるないさー</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://yuchuanghui.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
